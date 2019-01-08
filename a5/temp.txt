@@ -1,0 +1,64 @@
+sort:
+ld $n, r0
+ld (r0), r0     # r0 = n;
+dec r0          # r0 = n-1
+outerloop:
+beq r0, end_outerloop
+mov r0, r2      # r2 = n-1
+ld  $1, r1      # j = 1
+innerloop:
+beq r2, end_innerloop
+ld $s, r3
+ld (r3), r3     # base
+mov r1, r4      # r4 = j
+mov r1, r5      # r5 = j
+shl $3, r4
+shl $4, r5
+add r4, r5      # r5 = 24j
+mov r1, r4      # r4 = j
+dec r4          # r4 = j-1
+mov r4, r7
+mov r4, r8
+shl $3, r7
+shl $4, r8
+add r8, r7      # r7 = 24(j-1)
+add r3, r5      # r5 = &s[j]
+add r3, r7      # r7 = &s[j-1]
+ld 20(r5), r8   # r8 = s[j].avg
+ld 20(r7), r9   # r8 = s[j-1].avg
+not r8
+inc r8
+add r9, r8
+bgt r8, swap
+else:
+inc r1
+dec r2
+br innerloop
+
+
+swap:
+ld (r5), r4     # t = s[j]
+ld (r7), r9     # r9 = a[j-1]
+st r9, (r5)
+st r4, (r7)
+br else
+
+end_innerloop:
+dec r0
+
+
+end_outerloop:
+halt
+
+.long 1237  # student ID
+      .long 90    # grade 0
+      .long 90    # grade 1
+      .long 90    # grade 2
+      .long 90    # grade 3
+      .long 0     # computed average
+      .long 1238  # student ID
+      .long 20    # grade 0
+      .long 20    # grade 1
+      .long 20    # grade 2
+      .long 20    # grade 3
+      .long 0     # computed average

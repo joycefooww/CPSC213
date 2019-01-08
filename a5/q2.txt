@@ -1,0 +1,2 @@
+The char* pop function frees Element e but returns e->name, which is a dangling pointer. So when main receives the pointer,
+the pointer is pointing to an unknown location in memory which hold different values
